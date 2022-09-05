@@ -1,0 +1,9 @@
+.search-form {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+}
