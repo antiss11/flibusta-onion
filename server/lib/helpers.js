@@ -44,3 +44,16 @@ async function getImage(url) {
   const b64 = await Buffer.from(response.data).toString('base64');
   return b64;
 }
+
+async function downloadFile(url) {
+  const response = await axios.get(url, {
+    httpAgent,
+    responseType: 'arraybuffer',
+  }); 
+  const fileName = response.headers['content-disposition'].split('filename=')[1].replace(/["']/g, "");
+  fs.writeFileSync(path.join('public', fileName), response.data);
+  return fileName;
+}
+
+exports.getInfo = getInfo;
+exports.downloadFile = downloadFile;
