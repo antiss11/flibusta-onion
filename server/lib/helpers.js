@@ -33,3 +33,14 @@ async function getInfo(bookTitle) {
     }));
   });
 }
+
+async function getImage(url) {
+  if (url === undefined) return null;
+  const response = await axios.get(ORIGIN + url, {
+      responseType: 'arraybuffer',
+      httpAgent,
+    }
+  )
+  const b64 = await Buffer.from(response.data).toString('base64');
+  return b64;
+}
