@@ -8,7 +8,7 @@ function DownloadButton({ text, onClick, href, extension, isDownloading }) {
       onClick={onClick}
       data-ext={extension}
       disabled={isDownloading}
-      sx={{ width: "3rem" }}
+      sx={{ minWidth: "3rem" }}
     >
       {isDownloading ? <CircularProgress size="1rem" /> : text}
     </Button>
