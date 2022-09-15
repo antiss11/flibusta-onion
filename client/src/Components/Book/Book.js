@@ -17,6 +17,7 @@ const cardStyles = {
   justifyContent: "center",
   alignItems: "center",
   height: "100%",
+  width: "100%",
 };
 
 function Book({ title, cover, author, downloadLinks, handleDownload, id }) {

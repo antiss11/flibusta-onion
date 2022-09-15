@@ -116,7 +116,7 @@ class App extends React.Component {
     const gridItems = Object.keys(this.state.books).map((id) => {
       const { title, cover64, author, downloads } = this.state.books[id];
       return (
-        <Grid item md={6} lg={3} key={id}>
+        <Grid item sm={12} md={6} lg={3} key={id}>
           <Book
             title={title}
             cover={cover64}
