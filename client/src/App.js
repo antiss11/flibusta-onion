@@ -28,14 +28,13 @@ class App extends React.Component {
   }
 
   async _search() {
-    const response = await fetch("http://localhost:3001/search", {
-      method: "POST",
-      redirect: "follow",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(this.state),
-    });
+    const response = await fetch(
+      `http://localhost:3001/search?book=${encodeURI(this.state.query)}`,
+      {
+        method: "GET",
+        redirect: "follow",
+      }
+    );
 
     const books = await response.json();
 
