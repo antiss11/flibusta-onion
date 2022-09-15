@@ -1,16 +1,16 @@
 import React from "react";
 import axios from "axios";
+import CyrillicToTranslit from "cyrillic-to-translit-js";
 
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 import Search from "./Components/Search/Search";
 import Book from "./Components/Book/Book";
-import CyrillicToTranslit from "cyrillic-to-translit-js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { query: "", books: {}, isSearching: false };
+    this.state = { query: "", books: {}, isSearching: false, hasError: false };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -28,36 +28,40 @@ class App extends React.Component {
   }
 
   async _search() {
-    const response = await fetch(
-      `http://localhost:3001/search?book=${encodeURI(this.state.query)}`,
-      {
-        method: "GET",
-        redirect: "follow",
-      }
-    );
-
-    const books = await response.json();
-
-    // Create an object with keys as names (fb2, mobi, etc.)
-    const formattedBooksArray = books.map((book) => {
-      const downloadsInfo = Object.fromEntries(
-        book.downloads.map((downloadInfo) => [
-          downloadInfo.name,
-          { ...downloadInfo, isDownloading: false },
-        ])
+    try {
+      const response = await fetch(
+        `http://localhost:3001/search?book=${encodeURI(this.state.query)}`,
+        {
+          method: "GET",
+          redirect: "follow",
+        }
       );
-      return {
-        ...book,
-        downloads: downloadsInfo,
-      };
-    });
 
-    // Creating an object with usage array indexes as ids
-    const formattedBooksObj = Object.fromEntries(
-      Object.entries(formattedBooksArray)
-    );
+      const books = await response.json();
 
-    this.setState({ books: formattedBooksObj, isSearching: false });
+      // Create an object with keys as names (fb2, mobi, etc.)
+      const formattedBooksArray = books.map((book) => {
+        const downloadsInfo = Object.fromEntries(
+          book.downloads.map((downloadInfo) => [
+            downloadInfo.name,
+            { ...downloadInfo, isDownloading: false },
+          ])
+        );
+        return {
+          ...book,
+          downloads: downloadsInfo,
+        };
+      });
+
+      // Creating an object with usage array indexes as ids
+      const formattedBooksObj = Object.fromEntries(
+        Object.entries(formattedBooksArray)
+      );
+
+      this.setState({ books: formattedBooksObj, isSearching: false });
+    } catch (err) {
+      this.setState({ isSearching: false, hasError: true });
+    }
   }
 
   toggleLinkDownloading(id, linkName) {
@@ -152,9 +156,12 @@ class App extends React.Component {
             isSearching={this.state.isSearching}
           />
         </Grid>
-        <Grid item container spacing={5}>
-          {gridItems}
-        </Grid>
+        {this.state.hasError ? (
+          <Typography variant="h3">Oops, something went wrong...</Typography>
+        ) : (
+          gridItems
+        )}
+        <Grid item container spacing={5}></Grid>
       </Grid>
     );
   }
