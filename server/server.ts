@@ -2,17 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const helpers = require('./lib/helpers');
 const path = require('path');
-
+const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.post('/search', async (req, res) => {
-	const query = req.body.query;
-	const booksData = await helpers.getInfo(query);
+app.get('/search', async (req, res) => {
+	const book = req.query.book;
+	const booksData = await helpers.getInfo(book);
 	res.send(booksData);
 })
 
