@@ -1,8 +1,8 @@
-const express = require('express');
-const cors = require('cors');
-const helpers = require('./lib/helpers');
-const path = require('path');
-const bodyParser = require('body-parser');
+import express from 'express';
+import cors from 'cors';
+import helpers from './lib/helpers';
+import path from 'path';
+import bodyParser from 'body-parser';
 
 const app = express();
 
@@ -13,15 +13,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/search', async (req, res) => {
-	const book = req.query.book;
-	const booksData = await helpers.getInfo(book);
-	res.send(booksData);
-})
+  const book = req.query.book;
+  const booksData = await helpers.getInfo(book);
+  res.send(booksData);
+});
 
 app.get('/download/:url', async (req, res) => {
-	const url = req.params.url;
-	const fileName = await helpers.downloadFile(url);
-	res.download('public/' + fileName);
-})
+  const url = req.params.url;
+  const fileName = await helpers.downloadFile(url);
+  res.download('public/' + fileName);
+});
 
 app.listen(3001, () => console.log('express in running'));
