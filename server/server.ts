@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import {getBookInfo, downloadFile} from './lib/helpers';
-import path from 'path';
+import {getBooksInfo, downloadFile} from './lib/helpers';
 import bodyParser from 'body-parser';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 
@@ -17,13 +16,13 @@ app.use(bodyParser.json());
 
 app.get('/search', async (req, res) => {
   const bookTitle = req.query.book;
-  const booksData = await getBookInfo(flibustaOnionOrigin, httpAgent, bookTitle);
+  const booksData = await getBooksInfo(flibustaOnionOrigin, httpAgent, bookTitle);
   res.send(booksData);
 });
 
 app.get('/download/:url', async (req, res) => {
   const url = req.params.url;
-  const fileName = await downloadFile(flibustaOnionOrigin, httpAgent, url);
+  const fileName = await downloadFile(httpAgent, url);
   res.download('public/' + fileName);
 });
 
