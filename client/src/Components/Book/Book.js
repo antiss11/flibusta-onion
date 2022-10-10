@@ -33,7 +33,7 @@ function Book({ title, cover, author, downloadLinks, handleDownload, id }) {
   ));
 
   const coverImg =
-    cover === null ? coverPlaceholder : `data:image/jpg;base64, ${cover}`;
+    cover === null || cover === undefined ? coverPlaceholder : `data:image/jpg;base64, ${cover}`;
 
   return (
     <Card className="book" sx={cardStyles} px={3} id={id}>
