@@ -13,25 +13,25 @@ async function getBooksInfo(origin: string, httpAgent: SocksProxyAgent, bookTitl
   if (result === null || result === undefined) return null;
 
   // Array of base64 strings represent books covers
-  const covers64 = result.map((book) => {
+  const covers64Promises = result.map((book) => {
     if (book.cover) {
       return getImage(origin, httpAgent, book.cover)}
     }
   );
 
-  return Promise.all(covers64).then((covers64) => {
-    return result.map((book, i) => ({
-      description: book.description,
-      title: book.title,
-      cover64: covers64[i],
-      downloads: book.downloads.map((downloadInfo) => ({
-        name: downloadInfo.link.split("/").at(-1),
-        link: new URL(path.join(origin, downloadInfo.link)),
-        extension: mimes[downloadInfo.type],
-      })),
-      author: book.author[0].name,
-    }));
-  });
+  const covers64 = await Promise.all(covers64Promises);
+
+  return result.map((book, i) => ({
+    description: book.description,
+    title: book.title,
+    cover64: covers64[i],
+    downloads: book.downloads.map((downloadInfo) => ({
+      name: downloadInfo.link.split("/").at(-1),
+      link: new URL(downloadInfo.link, origin).href,
+      extension: mimes[downloadInfo.type],
+    })),
+    author: book.author[0].name,
+  }));
 }
 
 async function getImage(origin: string, httpAgent: SocksProxyAgent, urlPath: string): Promise<string | null> {
@@ -44,7 +44,7 @@ async function getImage(origin: string, httpAgent: SocksProxyAgent, urlPath: str
   return b64;
 }
 
-async function downloadFile(origin: string, httpAgent: SocksProxyAgent, url: string) {
+async function downloadFile(httpAgent: SocksProxyAgent, url: string): Promise<string> {
   const response = await axios.get(url, {
     httpAgent,
     responseType: "arraybuffer",
