@@ -3,3 +3,5 @@ type Download = {
   link: string;
   extension: string;
 }
+
+export default Download;
