@@ -14,13 +14,13 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/search', async (req, res) => {
-  const bookTitle = req.query.book;
+app.get('/search', async (req: express.Request, res: express.Response) => {
+  let bookTitle = req.query.book as string;
   const booksData = await getBooksInfo(flibustaOnionOrigin, httpAgent, bookTitle);
   res.send(booksData);
 });
 
-app.get('/download/:url', async (req, res) => {
+app.get('/download/:url', async (req: express.Request, res: express.Response) => {
   const url = req.params.url;
   const fileName = await downloadFile(httpAgent, url);
   res.download('public/' + fileName);
