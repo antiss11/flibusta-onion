@@ -5,8 +5,9 @@ import { URL } from "url";
 import FlibustaAPI from "flibusta";
 import { SocksProxyAgent } from "socks-proxy-agent";
 import mimes from "../types/mimes";
+import book from "../types/book";
 
-async function getBookInfo(origin: string, httpAgent: SocksProxyAgent, bookTitle: string ) {
+async function getBooksInfo(origin: string, httpAgent: SocksProxyAgent, bookTitle: string ): Promise<Array<book> | null> {
   const flibustaApi = new FlibustaAPI(origin, { httpAgent });
   const result = await flibustaApi.getBooksByNameFromOpds(bookTitle);
   if (result === null || result === undefined) return null;
@@ -55,4 +56,4 @@ async function downloadFile(origin: string, httpAgent: SocksProxyAgent, url: str
   return fileName;
 }
 
-export {getBookInfo, downloadFile};
+export {getBooksInfo, downloadFile};
