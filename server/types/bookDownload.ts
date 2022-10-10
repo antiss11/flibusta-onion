@@ -1,5 +1,5 @@
 type Download = {
-  name: string;
+  name: string | null | undefined;
   link: string;
   extension: string;
 }
