@@ -44,7 +44,7 @@ async function getImage(origin: string, httpAgent: SocksProxyAgent, urlPath: str
   return b64;
 }
 
-async function downloadFile(httpAgent: SocksProxyAgent, url: string): Promise<string> {
+async function downloadFile(httpAgent: SocksProxyAgent, url: string) {
   const response = await axios.get(url, {
     httpAgent,
     responseType: "arraybuffer",
@@ -52,7 +52,9 @@ async function downloadFile(httpAgent: SocksProxyAgent, url: string): Promise<st
   const fileName = response.headers["content-disposition"]
     .split("filename=")[1]
     .replace(/["']/g, "");
-  fs.writeFileSync(path.join("public", fileName), response.data);
+  fs.writeFile(path.join("public", fileName), response.data, (err) => {
+    if (err) throw err;
+  });
   return fileName;
 }
 
