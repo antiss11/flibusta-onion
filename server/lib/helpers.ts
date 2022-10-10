@@ -4,10 +4,10 @@ import axios from "axios";
 import { URL } from "url";
 import FlibustaAPI from "flibusta";
 import { SocksProxyAgent } from "socks-proxy-agent";
-import mimes from "../types/mimes";
-import book from "../types/book";
+import mimes from "../src/types/mimes";
+import Book from "../src/types/book";
 
-async function getBooksInfo(origin: string, httpAgent: SocksProxyAgent, bookTitle: string ): Promise<Array<book> | null> {
+async function getBooksInfo(origin: string, httpAgent: SocksProxyAgent, bookTitle: string ): Promise<Array<Book> | null> {
   const flibustaApi = new FlibustaAPI(origin, { httpAgent });
   const result = await flibustaApi.getBooksByNameFromOpds(bookTitle);
   if (result === null || result === undefined) return null;
