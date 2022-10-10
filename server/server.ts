@@ -3,7 +3,10 @@ import cors from 'cors';
 import helpers from './lib/helpers';
 import path from 'path';
 import bodyParser from 'body-parser';
+import { SocksProxyAgent } from 'socks-proxy-agent';
 
+const flibustaOnionOrigin = "http://flibustaongezhld6dibs2dps6vm4nvqg2kp7vgowbu76tzopgnhazqd.onion";
+const httpAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050");
 const app = express();
 
 app.use(cors());
