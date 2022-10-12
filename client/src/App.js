@@ -139,7 +139,7 @@ class App extends React.Component {
         justifyItems="center"
         justifyContent="center"
         alignItems="center"
-        px={7}
+        px={{ xs: 1, md: 7 }}
       >
         <Grid
           item
