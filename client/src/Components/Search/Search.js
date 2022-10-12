@@ -15,6 +15,7 @@ function Search({ onSubmit, onChange, value, isSearching }) {
         />
         <Button
           variant="outlined"
+          size="small"
           onClick={onSubmit}
           sx={{ width: "10%" }}
           disabled={isSearching}
