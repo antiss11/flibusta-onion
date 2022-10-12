@@ -1,7 +1,7 @@
 .search-form {
   width: 100%;
   display: flex;
-  gap: 20px;
+  gap: 1%;
 }
 
 .MuiFormControl-root {
