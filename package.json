@@ -1,0 +1,23 @@
+{
+  "name": "flibusta-onion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run_all": "concurrently \"npx nodemon server/server.ts\" \"cd client && npx webpack serve\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antiss11/flibusta-onion.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antiss11/flibusta-onion/issues"
+  },
+  "homepage": "https://github.com/antiss11/flibusta-onion#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
