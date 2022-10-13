@@ -1,10 +1,19 @@
 {
+  "root": {
+    "include": "./src/**/*",
+  },
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "NodeNext",
-    "strict": true,
-    "moduleResolution": "Node",
-    "noImplicitAny": false,
+    "target": "ES6",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "outDir": "dist",
     "allowSyntheticDefaultImports": true,
+
+    "strict": true,
+    "alwaysStrict": true,
+
+    "paths": {
+      "@localTypes/*": ["./types/*"],
+    }
   }
 }
