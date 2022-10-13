@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import {getBooksInfo, downloadFile} from '../lib/helpers';
+import { getBooksInfo, downloadFile } from './lib/helpers';
 import bodyParser from 'body-parser';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 
-const flibustaOnionOrigin = "http://flibustaongezhld6dibs2dps6vm4nvqg2kp7vgowbu76tzopgnhazqd.onion";
-const httpAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050");
+const flibustaOnionOrigin = 'http://flibustaongezhld6dibs2dps6vm4nvqg2kp7vgowbu76tzopgnhazqd.onion';
+const httpAgent = new SocksProxyAgent('socks5h://127.0.0.1:9050');
 const app = express();
 
 app.use(cors());
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/search', async (req: express.Request, res: express.Response) => {
-  let bookTitle = req.query.book as string;
+  const bookTitle = req.query.book as string;
   const booksData = await getBooksInfo(flibustaOnionOrigin, httpAgent, bookTitle);
   res.send(booksData);
 });
