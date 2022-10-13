@@ -4,8 +4,8 @@ import axios from "axios";
 import { URL } from "url";
 import FlibustaAPI from "flibusta";
 import { SocksProxyAgent } from "socks-proxy-agent";
-import mimes from "../types/mimes";
-import Book from "../types/book";
+import mimes from "@localTypes/mimes";
+import {Book} from "@localTypes/book";
 
 async function getBooksInfo(origin: string, httpAgent: SocksProxyAgent, bookTitle: string ): Promise<Array<Book> | null> {
   const flibustaApi = new FlibustaAPI(origin, { httpAgent });
