@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc && npx tsc-alias",
-    "watch": "concurrently \"npx tsc -w\" \"npx tsc-alias -w \" \"npx nodemon dist/*\""
+    "build": "npm run lint && npx tsc && npx tsc-alias",
+    "watch": "concurrently \"npx tsc -w\" \"npx tsc-alias -w \" \"npx nodemon dist/*\"",
+    "lint": "npx eslint --fix server.ts types/* src/*"
   },
   "keywords": [],
   "author": "",
